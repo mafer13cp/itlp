@@ -6,10 +6,10 @@ const config = {
   connector: 'mysql',
   url: '',
   host: 'remotemysql.com',
-  port: 3306,
-  user: 'uqLRWvJkD7',
-  password: 'p6jwNILFxX',
-  database: 'uqLRWvJkD7'
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
 };
 
 // Observe application's life cycle to disconnect the datasource when
