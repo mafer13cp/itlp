@@ -34,12 +34,6 @@ export class Usuario extends Entity {
   })
   contrasena: string;
 
-  @property({
-    type: 'string',
-    required: true,
-  })
-  tipo: string;
-
 
   constructor(data?: Partial<Usuario>) {
     super(data);
