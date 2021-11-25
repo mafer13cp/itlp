@@ -9,3 +9,4 @@ export * from './empleado.repository';
 export * from './documento.repository';
 export * from './autor.repository';
 export * from './tag-doc.repository';
+export * from './comentario.repository';

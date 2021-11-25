@@ -9,3 +9,4 @@ export * from './empleado.model';
 export * from './documento.model';
 export * from './autor.model';
 export * from './tag-doc.model';
+export * from './comentario.model';
