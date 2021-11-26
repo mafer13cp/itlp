@@ -39,6 +39,12 @@ export class Usuario extends Entity {
     required: false,
   })
   descripcion: string;
+  
+  @property({
+    type: 'number',
+    required: false,
+  })
+  img: string;
 
 
   constructor(data?: Partial<Usuario>) {

@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class Documento extends Entity {
+export class Rating extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -14,7 +14,7 @@ export class Documento extends Entity {
     type: 'string',
     required: true,
   })
-  nombre: string;
+  fk_documento: string;
 
   @property({
     type: 'string',
@@ -23,30 +23,19 @@ export class Documento extends Entity {
   fk_usuario: string;
 
   @property({
-    type: 'string',
-  })
-  fk_materia?: string;
-
-  @property({
-    type: 'string',
+    type: 'number',
     required: true,
   })
-  descripcion: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  archivoUrl: string;
+  calificacion: number;
 
 
-  constructor(data?: Partial<Documento>) {
+  constructor(data?: Partial<Rating>) {
     super(data);
   }
 }
 
-export interface DocumentoRelations {
+export interface RatingRelations {
   // describe navigational properties here
 }
 
-export type DocumentoWithRelations = Documento & DocumentoRelations;
+export type RatingWithRelations = Rating & RatingRelations;

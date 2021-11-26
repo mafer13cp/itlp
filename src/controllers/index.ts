@@ -9,3 +9,4 @@ export * from './documento.controller';
 export * from './autor.controller';
 export * from './tag-doc.controller';
 export * from './comentario.controller';
+export * from './rating.controller';
