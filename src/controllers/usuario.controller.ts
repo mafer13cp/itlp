@@ -4,27 +4,55 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
+import {ServiceKeys as keys} from '../keys/service-keys';
 import {Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
+import {Auth} from '../services/auth.service';
+import {EncryptDecrypt} from '../services/encryptDecrypt.service';
 
+class Credentials {
+  id: string;
+  password: string;
+}
 export class UsuarioController {
+  auth: Auth;
   constructor(
     @repository(UsuarioRepository)
     public usuarioRepository : UsuarioRepository,
-  ) {}
+  ) {
+    this.auth = new Auth(this.usuarioRepository);
+  }
+
+  @post('login', {
+    responses: {
+      '200':{
+        description: 'login for users'
+      }
+    }
+  })
+  async login(
+    @requestBody() credentials:Credentials
+  ): Promise<Object>{
+    let usuario = await this.auth.Identify(credentials.id, credentials.password);
+    if (usuario){
+      let tk = await this.auth.GenerateToken(usuario);
+      return {
+        data: usuario,
+        token: tk
+      }
+    }
+    else
+    {
+      throw new HttpErrors[401]('Usuario o contraseña inválidos');
+    }
+  }
 
   @post('/usuarios')
   @response(200, {
@@ -37,14 +65,21 @@ export class UsuarioController {
         'application/json': {
           schema: getModelSchemaRef(Usuario, {
             title: 'NewUsuario',
-            
+
           }),
         },
       },
     })
     usuario: Usuario,
   ): Promise<Usuario> {
-    return this.usuarioRepository.create(usuario);
+    let pass1 = new EncryptDecrypt(keys.MD5).Ecrypt(usuario.contrasena);
+    let pass2 = new EncryptDecrypt(keys.MD5).Ecrypt(pass1);
+    usuario.contrasena = pass2;
+    console.log(usuario);
+    console.log(pass1);
+    console.log(pass2);
+    let nuevoUsuario = this.usuarioRepository.create(usuario);
+    return nuevoUsuario;
   }
 
   @get('/usuarios/count')
