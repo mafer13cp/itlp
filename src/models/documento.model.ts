@@ -3,6 +3,10 @@ import {Materia} from './materia.model';
 import {Otros} from './otros.model';
 import {Comentario} from './comentario.model';
 import {Rating} from './rating.model';
+import {Usuario} from './usuario.model';
+import {Autor} from './autor.model';
+import {Tag} from './tag.model';
+import {TagDoc} from './tag-doc.model';
 
 @model()
 export class Documento extends Entity {
@@ -48,6 +52,12 @@ export class Documento extends Entity {
 
   @hasMany(() => Rating, {keyTo: 'fk_documento'})
   ratings_documento: Rating[];
+
+  @hasMany(() => Usuario, {through: {model: () => Autor, keyFrom: 'fk_documento', keyTo: 'fk_usuario'}})
+  usuarios_documento: Usuario[];
+
+  @hasMany(() => Tag, {through: {model: () => TagDoc, keyFrom: 'fk_documento', keyTo: 'fk_tag'}})
+  tags_documento: Tag[];
 
   constructor(data?: Partial<Documento>) {
     super(data);

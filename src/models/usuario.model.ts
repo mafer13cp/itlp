@@ -3,6 +3,8 @@ import {Rol} from './rol.model';
 import {Carrera} from './carrera.model';
 import {Comentario} from './comentario.model';
 import {Rating} from './rating.model';
+import {Documento} from './documento.model';
+import {Autor} from './autor.model';
 
 @model()
 export class Usuario extends Entity {
@@ -55,6 +57,9 @@ export class Usuario extends Entity {
 
   @hasMany(() => Rating, {keyTo: 'fk_usuario'})
   ratings_usuario: Rating[];
+
+  @hasMany(() => Documento, {through: {model: () => Autor, keyFrom: 'fk_usuario', keyTo: 'fk_documento'}})
+  documentos_usuario: Documento[];
 
   constructor(data?: Partial<Usuario>) {
     super(data);

@@ -16,3 +16,7 @@ export * from './rating-documento.controller';
 export * from './documento-rating.controller';
 export * from './rating-usuario.controller';
 export * from './usuario-rating.controller';
+export * from './documento-usuario.controller';
+export * from './usuario-documento.controller';
+export * from './tag-documento.controller';
+export * from './documento-tag.controller';

@@ -9,6 +9,15 @@ export class TagDoc extends Entity {
   })
   id?: number;
 
+  @property({
+    type: 'number',
+  })
+  fk_tag?: number;
+
+  @property({
+    type: 'number',
+  })
+  fk_documento?: number;
 
   constructor(data?: Partial<TagDoc>) {
     super(data);
