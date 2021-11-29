@@ -2,7 +2,24 @@ import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {Documento} from './documento.model';
 import {Usuario} from './usuario.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_documento: {
+        name: 'fk_documento',
+        entity: 'Documento',
+        entityKey: 'id',
+        foreignKey: 'fk_documento',
+      },
+      fk_usuario: {
+        name: 'fk_usuario',
+        entity: 'Usuario',
+        entityKey: 'id',
+        foreignKey: 'fk_usuario',
+      },
+    },
+  }
+})
 export class Rating extends Entity {
   @property({
     type: 'number',

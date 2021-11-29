@@ -2,7 +2,18 @@ import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository'
 import {Carrera} from './carrera.model';
 import {Documento} from './documento.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_carrera: {
+        name: 'fk_carrera',
+        entity: 'Carrera',
+        entityKey: 'id',
+        foreignKey: 'fk_carrera',
+      },
+    },
+  }
+})
 export class Materia extends Entity {
   @property({
     type: 'string',
