@@ -26,7 +26,7 @@ export class TagDocController {
     public tagDocRepository : TagDocRepository,
   ) {}
 
-  @post('/tag-docs')
+  @post('/tagDocs')
   @response(200, {
     description: 'TagDoc model instance',
     content: {'application/json': {schema: getModelSchemaRef(TagDoc)}},
@@ -37,17 +37,17 @@ export class TagDocController {
         'application/json': {
           schema: getModelSchemaRef(TagDoc, {
             title: 'NewTagDoc',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    tagDoc: TagDoc,
+    tagDoc: Omit<TagDoc, 'id'>,
   ): Promise<TagDoc> {
     return this.tagDocRepository.create(tagDoc);
   }
 
-  @get('/tag-docs/count')
+  @get('/tagDocs/count')
   @response(200, {
     description: 'TagDoc model count',
     content: {'application/json': {schema: CountSchema}},
@@ -58,7 +58,7 @@ export class TagDocController {
     return this.tagDocRepository.count(where);
   }
 
-  @get('/tag-docs')
+  @get('/tagDocs')
   @response(200, {
     description: 'Array of TagDoc model instances',
     content: {
@@ -76,7 +76,7 @@ export class TagDocController {
     return this.tagDocRepository.find(filter);
   }
 
-  @patch('/tag-docs')
+  @patch('/tagDocs')
   @response(200, {
     description: 'TagDoc PATCH success count',
     content: {'application/json': {schema: CountSchema}},
@@ -95,7 +95,7 @@ export class TagDocController {
     return this.tagDocRepository.updateAll(tagDoc, where);
   }
 
-  @get('/tag-docs/{id}')
+  @get('/tagDocs/{id}')
   @response(200, {
     description: 'TagDoc model instance',
     content: {
@@ -105,18 +105,18 @@ export class TagDocController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(TagDoc, {exclude: 'where'}) filter?: FilterExcludingWhere<TagDoc>
   ): Promise<TagDoc> {
     return this.tagDocRepository.findById(id, filter);
   }
 
-  @patch('/tag-docs/{id}')
+  @patch('/tagDocs/{id}')
   @response(204, {
     description: 'TagDoc PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -129,22 +129,22 @@ export class TagDocController {
     await this.tagDocRepository.updateById(id, tagDoc);
   }
 
-  @put('/tag-docs/{id}')
+  @put('/tagDocs/{id}')
   @response(204, {
     description: 'TagDoc PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() tagDoc: TagDoc,
   ): Promise<void> {
     await this.tagDocRepository.replaceById(id, tagDoc);
   }
 
-  @del('/tag-docs/{id}')
+  @del('/tagDocs/{id}')
   @response(204, {
     description: 'TagDoc DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.tagDocRepository.deleteById(id);
   }
 }

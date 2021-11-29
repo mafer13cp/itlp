@@ -37,12 +37,12 @@ export class DocumentoController {
         'application/json': {
           schema: getModelSchemaRef(Documento, {
             title: 'NewDocumento',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    documento: Documento,
+    documento: Omit<Documento, 'id'>,
   ): Promise<Documento> {
     return this.documentoRepository.create(documento);
   }
@@ -105,7 +105,7 @@ export class DocumentoController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(Documento, {exclude: 'where'}) filter?: FilterExcludingWhere<Documento>
   ): Promise<Documento> {
     return this.documentoRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class DocumentoController {
     description: 'Documento PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class DocumentoController {
     description: 'Documento PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() documento: Documento,
   ): Promise<void> {
     await this.documentoRepository.replaceById(id, documento);
@@ -144,7 +144,7 @@ export class DocumentoController {
   @response(204, {
     description: 'Documento DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.documentoRepository.deleteById(id);
   }
 }

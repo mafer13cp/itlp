@@ -1,14 +1,15 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Documento} from './documento.model';
+import {TagDoc} from './tag-doc.model';
 
 @model()
 export class Tag extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: string;
+  id?: number;
 
   @property({
     type: 'string',
@@ -16,6 +17,8 @@ export class Tag extends Entity {
   })
   nombre: string;
 
+  @hasMany(() => Documento, {through: {model: () => TagDoc, keyFrom: 'fk_tag', keyTo: 'fk_documento'}})
+  documentos_tag: Documento[];
 
   constructor(data?: Partial<Tag>) {
     super(data);

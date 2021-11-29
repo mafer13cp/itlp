@@ -37,12 +37,12 @@ export class ComentarioController {
         'application/json': {
           schema: getModelSchemaRef(Comentario, {
             title: 'NewComentario',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    comentario: Comentario,
+    comentario: Omit<Comentario, 'id'>,
   ): Promise<Comentario> {
     return this.comentarioRepository.create(comentario);
   }
@@ -105,7 +105,7 @@ export class ComentarioController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(Comentario, {exclude: 'where'}) filter?: FilterExcludingWhere<Comentario>
   ): Promise<Comentario> {
     return this.comentarioRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class ComentarioController {
     description: 'Comentario PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class ComentarioController {
     description: 'Comentario PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() comentario: Comentario,
   ): Promise<void> {
     await this.comentarioRepository.replaceById(id, comentario);
@@ -144,7 +144,7 @@ export class ComentarioController {
   @response(204, {
     description: 'Comentario DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.comentarioRepository.deleteById(id);
   }
 }

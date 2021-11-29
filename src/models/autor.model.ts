@@ -3,23 +3,21 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Autor extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: string;
+  id?: number;
+
+  @property({
+    type: 'number',
+  })
+  fk_documento?: number;
 
   @property({
     type: 'string',
   })
-  nombre?: string;
-
-  @property({
-    type: 'string',
-  })
-  fk_autor?: string;
-
+  fk_usuario?: string;
 
   constructor(data?: Partial<Autor>) {
     super(data);

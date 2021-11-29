@@ -37,12 +37,12 @@ export class AutorController {
         'application/json': {
           schema: getModelSchemaRef(Autor, {
             title: 'NewAutor',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    autor: Autor,
+    autor: Omit<Autor, 'id'>,
   ): Promise<Autor> {
     return this.autorRepository.create(autor);
   }
@@ -105,7 +105,7 @@ export class AutorController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(Autor, {exclude: 'where'}) filter?: FilterExcludingWhere<Autor>
   ): Promise<Autor> {
     return this.autorRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class AutorController {
     description: 'Autor PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class AutorController {
     description: 'Autor PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() autor: Autor,
   ): Promise<void> {
     await this.autorRepository.replaceById(id, autor);
@@ -144,7 +144,7 @@ export class AutorController {
   @response(204, {
     description: 'Autor DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.autorRepository.deleteById(id);
   }
 }

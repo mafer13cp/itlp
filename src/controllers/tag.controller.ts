@@ -37,12 +37,12 @@ export class TagController {
         'application/json': {
           schema: getModelSchemaRef(Tag, {
             title: 'NewTag',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    tag: Tag,
+    tag: Omit<Tag, 'id'>,
   ): Promise<Tag> {
     return this.tagRepository.create(tag);
   }
@@ -105,7 +105,7 @@ export class TagController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(Tag, {exclude: 'where'}) filter?: FilterExcludingWhere<Tag>
   ): Promise<Tag> {
     return this.tagRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class TagController {
     description: 'Tag PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class TagController {
     description: 'Tag PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() tag: Tag,
   ): Promise<void> {
     await this.tagRepository.replaceById(id, tag);
@@ -144,7 +144,7 @@ export class TagController {
   @response(204, {
     description: 'Tag DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.tagRepository.deleteById(id);
   }
 }

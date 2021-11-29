@@ -36,7 +36,7 @@ export class Auth {
         _id: usuario.id,
         password: usuario.contrasena,
         role: '1',
-        paterId: usuario.rol
+        paterId: usuario.fk_rol
       }
     },
     keys.JWT_SECRET_KEY);

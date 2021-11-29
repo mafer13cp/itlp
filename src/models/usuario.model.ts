@@ -1,4 +1,10 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {Rol} from './rol.model';
+import {Carrera} from './carrera.model';
+import {Comentario} from './comentario.model';
+import {Rating} from './rating.model';
+import {Documento} from './documento.model';
+import {Autor} from './autor.model';
 
 @model()
 export class Usuario extends Entity {
@@ -9,12 +15,6 @@ export class Usuario extends Entity {
     required: true,
   })
   id: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  rol: string;
 
   @property({
     type: 'string',
@@ -39,13 +39,27 @@ export class Usuario extends Entity {
     required: false,
   })
   descripcion: string;
-  
+
   @property({
     type: 'number',
-    required: false,
+    default: 0,
   })
-  img: string;
+  imagen?: number;
 
+  @belongsTo(() => Rol, {name: 'usuario_rol'})
+  fk_rol: number;
+
+  @belongsTo(() => Carrera, {name: 'usuario_carrera'})
+  fk_carrera: string;
+
+  @hasMany(() => Comentario, {keyTo: 'fk_usuario'})
+  comentarios_usuario: Comentario[];
+
+  @hasMany(() => Rating, {keyTo: 'fk_usuario'})
+  ratings_usuario: Rating[];
+
+  @hasMany(() => Documento, {through: {model: () => Autor, keyFrom: 'fk_usuario', keyTo: 'fk_documento'}})
+  documentos_usuario: Documento[];
 
   constructor(data?: Partial<Usuario>) {
     super(data);

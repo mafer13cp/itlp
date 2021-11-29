@@ -37,12 +37,12 @@ export class RatingController {
         'application/json': {
           schema: getModelSchemaRef(Rating, {
             title: 'NewRating',
-            
+            exclude: ['id'],
           }),
         },
       },
     })
-    rating: Rating,
+    rating: Omit<Rating, 'id'>,
   ): Promise<Rating> {
     return this.ratingRepository.create(rating);
   }
@@ -105,7 +105,7 @@ export class RatingController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @param.filter(Rating, {exclude: 'where'}) filter?: FilterExcludingWhere<Rating>
   ): Promise<Rating> {
     return this.ratingRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class RatingController {
     description: 'Rating PATCH success',
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class RatingController {
     description: 'Rating PUT success',
   })
   async replaceById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() rating: Rating,
   ): Promise<void> {
     await this.ratingRepository.replaceById(id, rating);
@@ -144,7 +144,7 @@ export class RatingController {
   @response(204, {
     description: 'Rating DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.ratingRepository.deleteById(id);
   }
 }
