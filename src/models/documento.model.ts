@@ -8,7 +8,18 @@ import {Autor} from './autor.model';
 import {Tag} from './tag.model';
 import {TagDoc} from './tag-doc.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_materia: {
+        name: 'fk_materia',
+        entity: 'Materia',
+        entityKey: 'id',
+        foreignKey: 'fk_materia',
+      },
+    },
+  }
+})
 export class Documento extends Entity {
   @property({
     type: 'number',

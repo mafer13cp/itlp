@@ -6,7 +6,24 @@ import {Rating} from './rating.model';
 import {Documento} from './documento.model';
 import {Autor} from './autor.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_rol: {
+        name: 'fk_rol',
+        entity: 'Rol',
+        entityKey: 'id',
+        foreignKey: 'fk_rol',
+      },
+      fk_carrera: {
+        name: 'fk_carrera',
+        entity: 'Carrera',
+        entityKey: 'id',
+        foreignKey: 'fk_carrera',
+      },
+    },
+  }
+})
 export class Usuario extends Entity {
   @property({
     type: 'string',
