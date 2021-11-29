@@ -3,24 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class TagDoc extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_documento: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_tag: string;
+  id?: number;
 
 
   constructor(data?: Partial<TagDoc>) {

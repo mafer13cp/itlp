@@ -1,26 +1,15 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Documento} from './documento.model';
+import {Usuario} from './usuario.model';
 
 @model()
 export class Comentario extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_documento: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_usuario: string;
+  id?: number;
 
   @property({
     type: 'string',
@@ -28,6 +17,11 @@ export class Comentario extends Entity {
   })
   texto: string;
 
+  @belongsTo(() => Documento, {name: 'comentario_documento'})
+  fk_documento: number;
+
+  @belongsTo(() => Usuario, {name: 'comentario_usuario'})
+  fk_usuario: string;
 
   constructor(data?: Partial<Comentario>) {
     super(data);

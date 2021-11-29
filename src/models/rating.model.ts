@@ -1,26 +1,15 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Documento} from './documento.model';
+import {Usuario} from './usuario.model';
 
 @model()
 export class Rating extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
-    generated: false,
-    required: true,
+    generated: true,
   })
-  id: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_documento: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  fk_usuario: string;
+  id?: number;
 
   @property({
     type: 'number',
@@ -28,6 +17,11 @@ export class Rating extends Entity {
   })
   calificacion: number;
 
+  @belongsTo(() => Documento, {name: 'rating_documento'})
+  fk_documento: number;
+
+  @belongsTo(() => Usuario, {name: 'rating_usuario'})
+  fk_usuario: string;
 
   constructor(data?: Partial<Rating>) {
     super(data);
