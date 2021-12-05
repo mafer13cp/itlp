@@ -33,6 +33,11 @@ export class Comentario extends Entity {
     required: true,
   })
   texto: string;
+  @property({
+    type: 'string',
+    required: true,
+  })
+  fecha: string;
 
   @belongsTo(() => Documento, {name: 'comentario_documento'})
   fk_documento: number;
