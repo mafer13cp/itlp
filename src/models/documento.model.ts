@@ -50,6 +50,12 @@ export class Documento extends Entity {
     type: 'string',
     required: true,
   })
+  imgUrl: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   fecha: string;
 
   @belongsTo(() => Materia, {name: 'documento_materia'})
